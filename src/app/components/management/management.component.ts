@@ -39,12 +39,15 @@ export class ManagementComponent implements OnInit {
     this.serviceProduit.deleteProduit(produit.id).subscribe(
       data => {
         console.log(data);
-        this.toastr.success('Hello world!', 'Toastr fun!');
+        this.toastr.success(produit.nom+' est supprimé!');
 
       }
-      , error => console.log(error)
+      , 
+      error =>{
+        console.log(error);
+        this.toastr.error("Erreur lors de la suppression");
+      }
     );
-    this.router.navigate(['/management']);
   }
 
   deleteCategorie(categorie: Categorie) {
@@ -56,9 +59,11 @@ export class ManagementComponent implements OnInit {
         console.log(data);
         this.toastr.success('La catégorie est supprimé!');
       },
-        error => console.log(error)
+      error =>{
+        console.log(error);
+        this.toastr.error("Erreur lors de la suppression");
+      }
     );
-    this.router.navigate(['/management']);
   }
 
 }

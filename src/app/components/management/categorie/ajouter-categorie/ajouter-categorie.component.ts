@@ -3,6 +3,7 @@ import { Categorie } from 'src/app/models/categorie-model';
 import { CategorieService } from 'src/app/services/categorie/categorie.service';
 import { Router } from '@angular/router';
 import {FormGroup,FormControl,FormBuilder,Validators} from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ajouter-categorie',
@@ -15,7 +16,7 @@ export class AjouterCategorieComponent implements OnInit {
   categorie:Categorie=new Categorie();
   submitted=false;
 
-  constructor(private service:CategorieService, private router:Router,private formBuilder:FormBuilder) {
+  constructor(private service:CategorieService, private router:Router,private formBuilder:FormBuilder,private toastr:ToastrService) {
       
    }
 
@@ -23,8 +24,17 @@ export class AjouterCategorieComponent implements OnInit {
   }
 
   ajouter(){
-    this.service.addCategorie(this.categorie).
-      subscribe(data => console.log(data), error => console.log(error));
+    this.service.addCategorie(this.categorie).subscribe(
+      data => {
+        console.log(data);
+        this.toastr.success("La catégorie est ajoutée!");
+      }
+      , 
+      error => {
+        console.log(error);
+        this.toastr.error("Erreur");
+      }
+      );
     this.categorie=new Categorie();
     this.router.navigate(['/management']);
   }

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ProduitService } from 'src/app/services/produit/produit.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Produit } from 'src/app/models/produit-model';
-import { Observable } from 'rxjs';
 import { Categorie } from 'src/app/models/categorie-model';
 import { CategorieService } from 'src/app/services/categorie/categorie.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-produit',
@@ -18,7 +18,7 @@ export class UpdateProduitComponent implements OnInit {
   produit:Produit;
   submitted:boolean=false;
 
-  constructor(private serviceCat:CategorieService,private service:ProduitService,private route:ActivatedRoute, private router:Router) { }
+  constructor(private serviceCat:CategorieService,private service:ProduitService,private route:ActivatedRoute, private router:Router,private toastr:ToastrService) { }
 
   ngOnInit() {
     this.reloadData();
@@ -37,7 +37,15 @@ export class UpdateProduitComponent implements OnInit {
   onSubmit(){
     this.submitted=true;
     this.service.updateProduit(this.id,this.produit).subscribe(
-      data=>console.log(data),error=>console.log(error)
+      data=>{
+        console.log(data);
+        this.toastr.success('Le produit est modifié avec succés');
+      }
+      ,
+      error=>{
+        console.log(error);
+        this.toastr.error('Erreur');
+      }
     );
     this.router.navigate(['/management']);
   }
