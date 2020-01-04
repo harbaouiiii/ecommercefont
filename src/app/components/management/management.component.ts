@@ -16,9 +16,9 @@ export class ManagementComponent implements OnInit {
 
   categories: Categorie[];
   produits: Produit[];
-  isAdmin=false;
-  isPm=false;
-  isUser=false;
+  isAdmin:boolean;
+  isPm:boolean;
+  isUser:boolean;
 
   constructor(
     private serviceCategorie: CategorieService, 
@@ -37,10 +37,12 @@ export class ManagementComponent implements OnInit {
     let roles = decodedToken.roles;
     roles = roles.replace('[','');
     roles = roles.replace(']','');
-    roles = roles.split(', '); // split string on comma space
+    roles = roles.split(', '); 
    // console.log( roles );
-    
-    
+    this.isUser=false;
+    this.isAdmin=false;
+    this.isPm=false;
+
     for (let i =0; i < roles.length; i++){
        if(roles[i] == "ROLE_USER")
         { this.isUser=true;}

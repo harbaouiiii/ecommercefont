@@ -14,4 +14,12 @@ export class LoginService {
     return this.http.post<any>(this.url,data);
   }
 
+  isLoggedIn(){
+    let token = localStorage.getItem("Authorization");
+    if (token) {
+      return true;
+    }
+    return false;
+  }
+
 }
