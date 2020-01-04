@@ -8,13 +8,14 @@ import { AjouterProduitComponent } from './components/management/produit/ajouter
 import { UpdateProduitComponent } from './components/management/produit/update-produit/update-produit.component';
 import { AjouterCategorieComponent } from './components/management/categorie/ajouter-categorie/ajouter-categorie.component';
 import { UpdateCategorieComponent } from './components/management/categorie/update-categorie/update-categorie.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 const routes: Routes = [
   {path:'',redirectTo:'home',pathMatch:'full'},
   {path:'home',component:HomeComponent},
   {path:'login',component:LoginComponent},
-  {path:'management',component:ManagementComponent},
+  {path:'management',component:ManagementComponent,canActivate:[AuthGuard]},
   {path:'register',component:RegisterComponent},
   {path:'ajouter-produit',component:AjouterProduitComponent},
   {path:'modifier-produit/:id',component:UpdateProduitComponent},

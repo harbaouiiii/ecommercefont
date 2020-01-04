@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +9,44 @@ export class CategorieService {
 
   constructor(private http:HttpClient) { }
 
-  allCategorie(){
-    return this.http.get(this.url+"allCategorie");
+  allCategorie(token){
+    var heards_options = new HttpHeaders().set("Authorization",token);
+    const httpOptions = {
+      headers : heards_options
+    }
+    return this.http.get<any>(this.url+"allCategorie",httpOptions);
   }
 
-  addCategorie(categorie:Object){
-    return this.http.post(this.url+"addCategorie",categorie);
+  addCategorie(categorie:Object,token){
+    var heards_options = new HttpHeaders().set("Authorization",token);
+    const httpOptions = {
+      headers : heards_options
+    }
+    return this.http.post<any>(this.url+"addCategorie",categorie,httpOptions);
   }
 
-  getCategorie(id:number){
-    return this.http.get(this.url+"categorie/"+id);
+  getCategorie(id:number,token){
+    var heards_options = new HttpHeaders().set("Authorization",token);
+    const httpOptions = {
+      headers : heards_options
+    }
+    return this.http.get<any>(this.url+"categorie/"+id,httpOptions);
   }
 
-  updateCategorie(id:number,categorie:Object){
-    return this.http.put(this.url+"categorie/"+id,categorie);
+  updateCategorie(id:number,categorie:Object,token){
+    var heards_options = new HttpHeaders().set("Authorization",token);
+    const httpOptions = {
+      headers : heards_options
+    }
+    return this.http.put<any>(this.url+"categorie/"+id,categorie,httpOptions);
   }
 
-  deleteCategorie(id:number){
-    return this.http.delete(this.url+"categorie/"+id);
+  deleteCategorie(id:number,token){
+    var heards_options = new HttpHeaders().set("Authorization",token);
+    const httpOptions = {
+      headers : heards_options
+    }
+    return this.http.delete<any>(this.url+"categorie/"+id,httpOptions);
   }
 
 }

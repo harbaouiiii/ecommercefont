@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { RegisterService } from 'src/app/services/register/register.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -11,7 +13,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm:FormGroup;
 
-  constructor(private formBuilder:FormBuilder) { 
+  constructor(private formBuilder:FormBuilder,private service:RegisterService,private toastr:ToastrService) { 
     let registerFormControls = {
       name:new FormControl('',[
         Validators.minLength(3),
@@ -30,7 +32,9 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(8),
         Validators.pattern('[a-zA-z0-9]+'),
       ]), 
-      //role:new FormControl()
+      role:new FormControl('user',[
+        Validators.required
+      ])
     };
     this.registerForm=formBuilder.group(registerFormControls);
   }
@@ -54,12 +58,25 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('password');
   }
 
-  /*get role(){
+  get role(){
     return this.registerForm.get('role');
-  }*/
+  }
 
   register(){
-    console.log(this.registerForm.value);
+    let data = this.registerForm.value;
+    data.role = [data.role];
+    console.log(data);
+    
+    this.service.register(data).subscribe(
+      res=>{
+        console.log(res);
+        this.toastr.success('User registred succesfully');
+      },
+      error=>{
+        console.log(error);
+        this.toastr.error('Erreur');
+      }
+    );
   }
 
 }

@@ -38,16 +38,17 @@
         <small *ngIf="password.errors.minlength">Password invalide</small>
       </div>
     </div>
-    <!--
     <div class="form-group">
       <label for="Role">Role</label>
       <select name="role" formControlName="role" class="form-control">
-        <option [ngValue]="user">User</option>
-        <option [ngValue]="admin">Admin</option>
-        <option [ngValue]="pm">PM</option>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+        <option value="pm">PM</option>
       </select>
+      <div class="text-danger" *ngIf="!role.valid && role.touched">
+        <small *ngIf="role.errors.required">Role required</small>
+      </div>
     </div>
-    -->
     <div class="form-group">
       <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Register</button>
     </div>

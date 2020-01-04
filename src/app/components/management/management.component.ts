@@ -5,6 +5,7 @@ import { CategorieService } from 'src/app/services/categorie/categorie.service';
 import { ProduitService } from 'src/app/services/produit/produit.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Component({
   selector: 'app-management',
@@ -15,19 +16,57 @@ export class ManagementComponent implements OnInit {
 
   categories: Categorie[];
   produits: Produit[];
+  isAdmin=false;
+  isPm=false;
+  isUser=false;
 
-  // tslint:disable-next-line:max-line-length
-  constructor(private serviceCategorie: CategorieService, private serviceProduit: ProduitService, private router: Router, private toastr: ToastrService) { }
+  constructor(
+    private serviceCategorie: CategorieService, 
+    private serviceProduit: ProduitService,
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.reloadData();
+
+    this.token;
+    this.reloadData(this.token);
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(this.token);
+    console.log(decodedToken)
+  //  let username = decodedToken.sub;
+    let roles = decodedToken.roles;
+    roles = roles.replace('[','');
+    roles = roles.replace(']','');
+    roles = roles.split(', '); // split string on comma space
+   // console.log( roles );
+    
+    
+    for (let i =0; i < roles.length; i++){
+       if(roles[i] == "ROLE_USER")
+        { this.isUser=true;}
+
+        if (roles[i] == "ROLE_ADMIN")
+          {this.isAdmin=true;}
+
+          if (roles[i] == "ROLE_PM")
+         { this.isPm=true;}
+
+        console.log(this.isAdmin,this.isPm,this.isUser);
+        
+    }
+
   }
 
-  reloadData() {
-    this.serviceCategorie.allCategorie().subscribe(
+  get token(){
+    let token = localStorage.getItem("Authorization");
+    return token;
+  }
+
+  reloadData(token) {
+    this.serviceCategorie.allCategorie(token).subscribe(
       (res) => this.categories = res
     );
-    this.serviceProduit.allProduit().subscribe(
+    this.serviceProduit.allProduit(token).subscribe(
       (res) => this.produits = res
     );
   }
@@ -35,8 +74,7 @@ export class ManagementComponent implements OnInit {
   deleteProduit(produit: Produit) {
     const index = this.produits.indexOf(produit);
     this.produits.splice(index, 1);
-
-    this.serviceProduit.deleteProduit(produit.id).subscribe(
+    this.serviceProduit.deleteProduit(produit.id,this.token).subscribe(
       data => {
         console.log(data);
         this.toastr.success(produit.nom+' est supprimé!');
@@ -54,7 +92,7 @@ export class ManagementComponent implements OnInit {
     const index = this.categories.indexOf(categorie);
     this.categories.splice(index, 1);
 
-    this.serviceCategorie.deleteCategorie(categorie.id).subscribe(
+    this.serviceCategorie.deleteCategorie(categorie.id,this.token).subscribe(
       data => {
         console.log(data);
         this.toastr.success('La catégorie est supprimé!');

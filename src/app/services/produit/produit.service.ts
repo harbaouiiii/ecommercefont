@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,23 +9,43 @@ export class ProduitService {
 
   constructor(private http:HttpClient) { }
 
-  allProduit(){
-    return this.http.get(this.url+"allProduit");
+  allProduit(token){
+    var headers_object = new HttpHeaders().set("Authorization",token);
+    const httpOptions ={
+      headers: headers_object
+    };
+    return this.http.get<any>(this.url+"allProduit",httpOptions);
   }
 
-  getProduit(id:number){
-    return this.http.get(this.url+"produit/"+id);
+  getProduit(id:number,token){
+    var headers_object = new HttpHeaders().set("Authorization",token);
+    const httpOptions ={
+      headers: headers_object
+    };
+    return this.http.get<any>(this.url+"produit/"+id,httpOptions);
   }
 
-  addProduit(produit:Object){
-    return this.http.post(this.url+"addProduit",produit);
+  addProduit(produit:Object,token){
+    var headers_object = new HttpHeaders().set("Authorization",token);
+    const httpOptions ={
+      headers: headers_object
+    };
+    return this.http.post<any>(this.url+"addProduit",produit,httpOptions);
   }
 
-  updateProduit(id:number,produit:Object){
-    return this.http.put(this.url+"produit/"+id,produit);
+  updateProduit(id:number,produit:Object,token){
+    var headers_object = new HttpHeaders().set("Authorization",token);
+    const httpOptions ={
+      headers: headers_object
+    };
+    return this.http.put<any>(this.url+"produit/"+id,produit,httpOptions);
   }
 
-  deleteProduit(id:number){
-    return this.http.delete(this.url+"produit/"+id);
+  deleteProduit(id:number,token){
+    var headers_object = new HttpHeaders().set("Authorization",token);
+    const httpOptions ={
+      headers: headers_object
+    };
+    return this.http.delete<any>(this.url+"produit/"+id,httpOptions);
   }
 }

@@ -32,7 +32,7 @@ import { ToastrModule,ToastNoAnimation,ToastNoAnimationModule} from 'ngx-toastr'
     AjouterProduitComponent,
     UpdateProduitComponent,
     AjouterCategorieComponent,
-    UpdateCategorieComponent
+    UpdateCategorieComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +42,6 @@ import { ToastrModule,ToastNoAnimation,ToastNoAnimationModule} from 'ngx-toastr'
     FormsModule,
     ReactiveFormsModule,
     ToastNoAnimationModule.forRoot(),
-
   ],
   providers: [
     ProduitService,

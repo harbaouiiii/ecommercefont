@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { LoginService } from 'src/app/services/login/login.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -10,15 +13,18 @@ export class LoginComponent implements OnInit {
 
   loginForm:FormGroup;
 
-  constructor(private formBuilder:FormBuilder) { 
+  constructor(private formBuilder:FormBuilder, private loginService:LoginService,private router:Router,private toastr:ToastrService) { 
     let loginFormControls = {
-      email:new FormControl('',[
+      /*email:new FormControl('',[
         Validators.required,
         Validators.email,
+      ]),*/
+      username:new FormControl('',[
+        Validators.required
       ]),
       password:new FormControl('',[
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(6),
       ]),
     }
     this.loginForm=formBuilder.group(loginFormControls);
@@ -38,6 +44,15 @@ export class LoginComponent implements OnInit {
 
   login(){
     console.log(this.loginForm.value);
-    
+    this.loginService.login(this.loginForm.value).subscribe(
+      res=>{
+        localStorage.setItem("Authorization",res.tokenType+" "+res.accessToken);
+        this.router.navigate(['/home']);
+      },
+      error=>{
+        console.log(error);
+        this.toastr.error('Username or password incorrect!');
+      }
+    );
   }
 }
