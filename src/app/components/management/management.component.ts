@@ -32,7 +32,7 @@ export class ManagementComponent implements OnInit {
     this.reloadData(this.token);
     const helper = new JwtHelperService();
     const decodedToken = helper.decodeToken(this.token);
-    console.log(decodedToken)
+    //console.log(decodedToken)
   //  let username = decodedToken.sub;
     let roles = decodedToken.roles;
     roles = roles.replace('[','');
@@ -53,7 +53,7 @@ export class ManagementComponent implements OnInit {
           if (roles[i] == "ROLE_PM")
          { this.isPm=true;}
 
-        console.log(this.isAdmin,this.isPm,this.isUser);
+        //console.log(this.isAdmin,this.isPm,this.isUser);
         
     }
 

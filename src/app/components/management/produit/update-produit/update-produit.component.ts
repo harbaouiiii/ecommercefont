@@ -25,18 +25,20 @@ export class UpdateProduitComponent implements OnInit {
   }
 
   reloadData(){
-    this.serviceCat.allCategorie().subscribe(
+    let token = localStorage.getItem("Authorization");
+    this.serviceCat.allCategorie(token).subscribe(
       res=>this.categories=res
     );
     this.id=this.route.snapshot.params['id'];
-    this.service.getProduit(this.id).subscribe(
+    this.service.getProduit(this.id,token).subscribe(
       data=>this.produit=data,error=>console.log(error)
     );
   }
 
   onSubmit(){
+    let token = localStorage.getItem("Authorization");
     this.submitted=true;
-    this.service.updateProduit(this.id,this.produit).subscribe(
+    this.service.updateProduit(this.id,this.produit,token).subscribe(
       data=>{
         console.log(data);
         this.toastr.success('Le produit est modifié avec succés');

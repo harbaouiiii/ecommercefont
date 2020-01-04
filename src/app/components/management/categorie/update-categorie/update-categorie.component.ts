@@ -22,15 +22,17 @@ export class UpdateCategorieComponent implements OnInit {
   }
 
   reloadData(){
+    let token = localStorage.getItem("Authorization");
     this.id=this.route.snapshot.params['id'];
-    this.categorieService.getCategorie(this.id).subscribe(
+    this.categorieService.getCategorie(this.id,token).subscribe(
       data=>this.categorie=data,error=>console.log(error)
     );
   }
 
   onSubmit(){
     this.submitted=true;
-    this.categorieService.updateCategorie(this.id,this.categorie).subscribe(
+    let token = localStorage.getItem("Authorization");
+    this.categorieService.updateCategorie(this.id,this.categorie,token).subscribe(
       data => {
         console.log(data);
         this.toastr.success("La catégorie est mise à jour!");

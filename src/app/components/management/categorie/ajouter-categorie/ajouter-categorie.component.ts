@@ -21,10 +21,12 @@ export class AjouterCategorieComponent implements OnInit {
    }
 
   ngOnInit() {
+    
   }
 
   ajouter(){
-    this.service.addCategorie(this.categorie).subscribe(
+    let token = localStorage.getItem("Authorization");
+    this.service.addCategorie(this.categorie,token).subscribe(
       data => {
         console.log(data);
         this.toastr.success("La catégorie est ajoutée!");
@@ -36,7 +38,10 @@ export class AjouterCategorieComponent implements OnInit {
       }
       );
     this.categorie=new Categorie();
-    this.router.navigate(['/management']);
+    setTimeout(()=>{
+      this.router.navigate(['/management']);
+    },500)
+    
   }
 
   onSubmit(){

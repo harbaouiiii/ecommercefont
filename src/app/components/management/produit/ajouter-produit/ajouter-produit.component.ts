@@ -20,14 +20,16 @@ export class AjouterProduitComponent implements OnInit {
   constructor(private categorieService:CategorieService ,private service:ProduitService,private router:Router,private toastr:ToastrService) { }
 
   ngOnInit() {
-    this.categorieService.allCategorie().subscribe(
+    let token = localStorage.getItem("Authorization");
+    this.categorieService.allCategorie(token).subscribe(
       res=>this.categories=res
     )
   }
 
   onSubmit(){
+    let token = localStorage.getItem("Authorization");
     this.submitted=true;
-    this.service.addProduit(this.produit).subscribe(
+    this.service.addProduit(this.produit,token).subscribe(
     data=>{
       console.log(data);
       this.toastr.success("Le produit est ajouté!");
