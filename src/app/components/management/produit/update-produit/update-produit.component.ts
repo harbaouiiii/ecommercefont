@@ -15,7 +15,7 @@ export class UpdateProduitComponent implements OnInit {
   
   categories:Categorie[];
   id:number;
-  produit:Produit;
+  produit=new Produit();
   submitted:boolean=false;
 
   constructor(private serviceCat:CategorieService,private service:ProduitService,private route:ActivatedRoute, private router:Router,private toastr:ToastrService) { }
@@ -49,7 +49,9 @@ export class UpdateProduitComponent implements OnInit {
         this.toastr.error('Erreur');
       }
     );
-    this.router.navigate(['/management']);
+    setTimeout(() => {
+      this.router.navigate(['/management']);
+    }, 200);
   }
 
 

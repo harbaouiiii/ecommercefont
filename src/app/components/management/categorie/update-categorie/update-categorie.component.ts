@@ -15,7 +15,12 @@ export class UpdateCategorieComponent implements OnInit {
   id:number;
   categorie;
 
-  constructor(private categorieService:CategorieService,private route:ActivatedRoute,private router:Router,private toastr:ToastrService) { }
+  constructor(
+    private categorieService:CategorieService,
+    private route:ActivatedRoute,
+    private router:Router,
+    private toastr:ToastrService
+    ) { }
 
   ngOnInit() {
     this.reloadData();
@@ -41,7 +46,9 @@ export class UpdateCategorieComponent implements OnInit {
         console.log(error);
         this.toastr.error("Erreur");
       });
-      this.router.navigate(['/management']);
+      setTimeout(()=>{
+        this.router.navigate(['/management']);
+      },200)
   }
 
 }

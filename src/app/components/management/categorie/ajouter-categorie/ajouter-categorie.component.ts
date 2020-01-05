@@ -16,9 +16,12 @@ export class AjouterCategorieComponent implements OnInit {
   categorie:Categorie=new Categorie();
   submitted=false;
 
-  constructor(private service:CategorieService, private router:Router,private formBuilder:FormBuilder,private toastr:ToastrService) {
-      
-   }
+  constructor(
+    private service:CategorieService, 
+    private router:Router,
+    private formBuilder:FormBuilder,
+    private toastr:ToastrService
+    ) {}
 
   ngOnInit() {
     
@@ -40,7 +43,7 @@ export class AjouterCategorieComponent implements OnInit {
     this.categorie=new Categorie();
     setTimeout(()=>{
       this.router.navigate(['/management']);
-    },500)
+    },200)
     
   }
 

@@ -19,6 +19,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProduitService } from './services/produit/produit.service';
 import { CategorieService } from './services/categorie/categorie.service';
 import { ToastrModule,ToastNoAnimation,ToastNoAnimationModule} from 'ngx-toastr';
+import { UserComponent } from './components/management/user/user/user.component';
+import { ChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +36,7 @@ import { ToastrModule,ToastNoAnimation,ToastNoAnimationModule} from 'ngx-toastr'
     UpdateProduitComponent,
     AjouterCategorieComponent,
     UpdateCategorieComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +46,7 @@ import { ToastrModule,ToastNoAnimation,ToastNoAnimationModule} from 'ngx-toastr'
     FormsModule,
     ReactiveFormsModule,
     ToastNoAnimationModule.forRoot(),
+    ChartsModule
   ],
   providers: [
     ProduitService,

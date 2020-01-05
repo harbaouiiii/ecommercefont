@@ -9,19 +9,30 @@ import { LoginService } from 'src/app/services/login/login.service';
 })
 export class NavbarComponent implements OnInit {
 
-  isLoggedIn:boolean;
+
 
   constructor(private router:Router,private loginService:LoginService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+
+   }
 
   isLogged(){
     return this.loginService.isLoggedIn();
   }
 
+  isAdmin(){
+    return this.loginService.isLoggedAdmin()
+  }
+
   logout(){
     localStorage.removeItem("Authorization");
     this.router.navigate(['/login']);
+  }
+
+  isActivated(){
+    return this.loginService.isActivated();
   }
 
 }

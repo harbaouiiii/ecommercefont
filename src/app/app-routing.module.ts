@@ -9,6 +9,7 @@ import { UpdateProduitComponent } from './components/management/produit/update-p
 import { AjouterCategorieComponent } from './components/management/categorie/ajouter-categorie/ajouter-categorie.component';
 import { UpdateCategorieComponent } from './components/management/categorie/update-categorie/update-categorie.component';
 import { AuthGuard } from './guards/auth.guard';
+import { UserComponent } from './components/management/user/user/user.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   {path:'ajouter-produit',component:AjouterProduitComponent},
   {path:'modifier-produit/:id',component:UpdateProduitComponent},
   {path:'ajouter-categorie',component:AjouterCategorieComponent},
-  {path:'modifier-categorie/:id',component:UpdateCategorieComponent}
+  {path:'modifier-categorie/:id',component:UpdateCategorieComponent},
+  {path:'gerer-users',component:UserComponent,canActivate:[AuthGuard]}
 
 ];
 

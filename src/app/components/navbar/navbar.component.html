@@ -4,7 +4,10 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a *ngIf="isLogged()" [routerLink]="['/management']" class="nav-link">Management</a>
+          <a *ngIf="isLogged() && isActivated()" [routerLink]="['/management']" class="nav-link">Management</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="isLogged() && isAdmin() && isActivated()" [routerLink]="['/gerer-users']" class="nav-link">Gestion des utilisateurs</a>
         </li>
       </ul>
       <div class="float-right">

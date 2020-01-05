@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { LoginService } from 'src/app/services/login/login.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +44,6 @@ export class LoginComponent implements OnInit {
 
 
   login(){
-    console.log(this.loginForm.value);
     this.loginService.login(this.loginForm.value).subscribe(
       res=>{
         localStorage.setItem("Authorization",res.tokenType+" "+res.accessToken);
@@ -51,8 +51,17 @@ export class LoginComponent implements OnInit {
       },
       error=>{
         console.log(error);
-        this.toastr.error('Username or password incorrect!');
+        this.toastr.error(error.error.text);
       }
     );
   }
+
+  etat(){
+    let token = localStorage.getItem("Authorization");
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(token);
+    let etat = decodedToken.etat;
+    return etat;
+  }
+
 }

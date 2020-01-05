@@ -39,7 +39,9 @@ export class AjouterProduitComponent implements OnInit {
       console.log(error);
       this.toastr.error("Erreur");
     });
-    this.router.navigate(['/management']);
+    setTimeout(() => {
+      this.router.navigate(['/management']);
+    }, 200);
   }
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { RegisterService } from 'src/app/services/register/register.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm:FormGroup;
 
-  constructor(private formBuilder:FormBuilder,private service:RegisterService,private toastr:ToastrService) { 
+  constructor(private formBuilder:FormBuilder,private service:RegisterService,private toastr:ToastrService,private router:Router) { 
     let registerFormControls = {
       name:new FormControl('',[
         Validators.minLength(3),
@@ -70,11 +71,12 @@ export class RegisterComponent implements OnInit {
     this.service.register(data).subscribe(
       res=>{
         console.log(res);
-        this.toastr.success('User registred succesfully');
+       this.toastr.success('User registred succesfully'),
+        this.router.navigate(['/login']);
       },
       error=>{
-        console.log(error);
-        this.toastr.error('Erreur');
+       console.log(error);
+        this.toastr.error(error.error);
       }
     );
   }

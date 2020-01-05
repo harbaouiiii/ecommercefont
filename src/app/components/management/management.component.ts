@@ -32,13 +32,13 @@ export class ManagementComponent implements OnInit {
     this.reloadData(this.token);
     const helper = new JwtHelperService();
     const decodedToken = helper.decodeToken(this.token);
-    //console.log(decodedToken)
-  //  let username = decodedToken.sub;
     let roles = decodedToken.roles;
+    
+    let username = decodedToken.sub;
     roles = roles.replace('[','');
     roles = roles.replace(']','');
     roles = roles.split(', '); 
-   // console.log( roles );
+    
     this.isUser=false;
     this.isAdmin=false;
     this.isPm=false;
@@ -52,9 +52,7 @@ export class ManagementComponent implements OnInit {
 
           if (roles[i] == "ROLE_PM")
          { this.isPm=true;}
-
-        //console.log(this.isAdmin,this.isPm,this.isUser);
-        
+      
     }
 
   }
@@ -88,6 +86,7 @@ export class ManagementComponent implements OnInit {
         this.toastr.error("Erreur lors de la suppression");
       }
     );
+    setTimeout(()=>200);
   }
 
   deleteCategorie(categorie: Categorie) {
@@ -104,6 +103,7 @@ export class ManagementComponent implements OnInit {
         this.toastr.error("Erreur lors de la suppression");
       }
     );
+    setTimeout(()=>200);
   }
-
+  
 }
